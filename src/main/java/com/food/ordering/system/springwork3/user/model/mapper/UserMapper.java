@@ -19,8 +19,9 @@ public class UserMapper {
                 .email(user.getEmail())
                 .status(user.getStatus().name())
                 .address(AddressMapper.toDTO(user.getAddress()))
-                .orders(OrderMapper.toDTOList(user.getOrders()))
-                .cartItems(CartItemMapper.toDTOList(user.getCartItems()))
+                .password(user.getPassword())
+                .orders(user.getOrders() != null ? OrderMapper.toDTOList(user.getOrders()) : null)
+                .cartItems(user.getCartItems() != null ? CartItemMapper.toDTOList(user.getCartItems()) : null)
                 .deleted(user.isDeleted())
                 .createdAt(user.getCreatedAt())
                 .build();
@@ -33,8 +34,9 @@ public class UserMapper {
                 .email(userDTO.getEmail())
                 .status(UserStatus.valueOf(userDTO.getStatus()))
                 .address(AddressMapper.toEntity(userDTO.getAddress()))
-                .orders(OrderMapper.toEntityList(userDTO.getOrders()))
-                .cartItems(CartItemMapper.toEntityList(userDTO.getCartItems()))
+                .password(userDTO.getPassword())
+                .orders(userDTO.getOrders() != null ? OrderMapper.toEntityList(userDTO.getOrders()) : null)
+                .cartItems(userDTO.getCartItems() != null ? CartItemMapper.toEntityList(userDTO.getCartItems()) : null)
                 .deleted(userDTO.isDeleted())
                 .createdAt(userDTO.getCreatedAt())
                 .build();
@@ -46,9 +48,6 @@ public class UserMapper {
         }
         if (userDTO.getEmail() != null) {
             user.setEmail(userDTO.getEmail());
-        }
-        if (userDTO.getPassword() != null) {
-            user.setPassword(userDTO.getPassword());
         }
         if (userDTO.getStatus() != null) {
             user.setStatus(UserStatus.valueOf(userDTO.getStatus()));
@@ -62,6 +61,11 @@ public class UserMapper {
         if (userDTO.getCartItems() != null) {
             user.setCartItems(CartItemMapper.toEntityList(userDTO.getCartItems()));
         }
+        if (userDTO.getPassword() != null) {
+            user.setPassword(userDTO.getPassword());
+        }
+        user.setDeleted(userDTO.isDeleted());
+        user.setCreatedAt(userDTO.getCreatedAt());
     }
 
 

@@ -18,8 +18,8 @@ public class OrderMapper {
                 .orderDate(order.getOrderDate())
                 .status(order.getStatus().name())
                 .userId(order.getUser().getId())
-                .productIds(order.getProducts().stream().map(Product::getId).collect(Collectors.toList()))
-                .payment(PaymentMapper.toDTO(order.getPayment()))
+                .productIds(order.getProducts() != null ? order.getProducts().stream().map(Product::getId).collect(Collectors.toList()) : null)
+                .payment(order.getPayment() != null ? PaymentMapper.toDTO(order.getPayment()) : null)
                 .deleted(order.isDeleted())
                 .createdAt(order.getCreatedAt())
                 .build();
@@ -30,11 +30,9 @@ public class OrderMapper {
                 .id(orderDTO.getId())
                 .orderDate(orderDTO.getOrderDate())
                 .status(OrderStatus.valueOf(orderDTO.getStatus()))
-                .user(User.builder().id(orderDTO.getUserId()).build())
-                .products(orderDTO.getProductIds().stream()
-                        .map(id -> Product.builder().id(id).build())
-                        .collect(Collectors.toList()))  // Correctly creating a List<Product>
-                .payment(PaymentMapper.toEntity(orderDTO.getPayment()))
+                .user(orderDTO.getUserId() != null ? User.builder().id(orderDTO.getUserId()).build() : null)
+                .products(orderDTO.getProductIds() != null ? orderDTO.getProductIds().stream().map(id -> Product.builder().id(id).build()).collect(Collectors.toList()) : null)
+                .payment(orderDTO.getPayment() != null ? PaymentMapper.toEntity(orderDTO.getPayment()) : null)
                 .deleted(orderDTO.isDeleted())
                 .createdAt(orderDTO.getCreatedAt())
                 .build();
@@ -51,15 +49,14 @@ public class OrderMapper {
             order.setUser(User.builder().id(orderDTO.getUserId()).build());
         }
         if (orderDTO.getProductIds() != null) {
-            order.setProducts(orderDTO.getProductIds().stream()
-                    .map(id -> Product.builder().id(id).build())
-                    .collect(Collectors.toList()));
+            order.setProducts(orderDTO.getProductIds().stream().map(id -> Product.builder().id(id).build()).collect(Collectors.toList()));
         }
         if (orderDTO.getPayment() != null) {
             order.setPayment(PaymentMapper.toEntity(orderDTO.getPayment()));
         }
+        order.setDeleted(orderDTO.isDeleted());
+        order.setCreatedAt(orderDTO.getCreatedAt());
     }
-
 
     public static List<OrderDTO> toDTOList(List<Order> orders) {
         return orders.stream()

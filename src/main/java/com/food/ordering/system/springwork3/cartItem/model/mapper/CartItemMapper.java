@@ -13,9 +13,9 @@ public class CartItemMapper {
     public static CartItemDTO toDTO(CartItem cartItem) {
         return CartItemDTO.builder()
                 .id(cartItem.getId())
-                .quantity(cartItem.getQuantity())
                 .userId(cartItem.getUser().getId())
                 .productId(cartItem.getProduct().getId())
+                .quantity(cartItem.getQuantity())
                 .deleted(cartItem.isDeleted())
                 .createdAt(cartItem.getCreatedAt())
                 .build();
@@ -24,26 +24,27 @@ public class CartItemMapper {
     public static CartItem toEntity(CartItemDTO cartItemDTO) {
         return CartItem.builder()
                 .id(cartItemDTO.getId())
+                .user(cartItemDTO.getUserId() != null ? User.builder().id(cartItemDTO.getUserId()).build() : null)
+                .product(cartItemDTO.getProductId() != null ? Product.builder().id(cartItemDTO.getProductId()).build() : null)
                 .quantity(cartItemDTO.getQuantity())
-                .user(User.builder().id(cartItemDTO.getUserId()).build())
-                .product(Product.builder().id(cartItemDTO.getProductId()).build())
                 .deleted(cartItemDTO.isDeleted())
                 .createdAt(cartItemDTO.getCreatedAt())
                 .build();
     }
 
     public static void partialUpdate(CartItemDTO cartItemDTO, CartItem cartItem) {
-        if (cartItemDTO.getQuantity() != 0) {
-            cartItem.setQuantity(cartItemDTO.getQuantity());
-        }
         if (cartItemDTO.getUserId() != null) {
             cartItem.setUser(User.builder().id(cartItemDTO.getUserId()).build());
         }
         if (cartItemDTO.getProductId() != null) {
             cartItem.setProduct(Product.builder().id(cartItemDTO.getProductId()).build());
         }
+        if (cartItemDTO.getQuantity() != 0) {
+            cartItem.setQuantity(cartItemDTO.getQuantity());
+        }
+        cartItem.setDeleted(cartItemDTO.isDeleted());
+        cartItem.setCreatedAt(cartItemDTO.getCreatedAt());
     }
-
 
     public static List<CartItemDTO> toDTOList(List<CartItem> cartItems) {
         return cartItems.stream()

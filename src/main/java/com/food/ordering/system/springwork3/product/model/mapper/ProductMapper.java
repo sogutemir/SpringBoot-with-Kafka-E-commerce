@@ -1,7 +1,5 @@
 package com.food.ordering.system.springwork3.product.model.mapper;
 
-import com.food.ordering.system.springwork3.cartItem.model.mapper.CartItemMapper;
-import com.food.ordering.system.springwork3.order.model.mapper.OrderMapper;
 import com.food.ordering.system.springwork3.product.model.ProductStatus;
 import com.food.ordering.system.springwork3.product.model.entity.Product;
 import com.food.ordering.system.springwork3.product.model.dto.ProductDTO;
@@ -16,11 +14,9 @@ public class ProductMapper {
                 .id(product.getId())
                 .name(product.getName())
                 .description(product.getDescription())
-                .stockQuantity(product.getStockQuantity())
                 .price(product.getPrice())
+                .stockQuantity(product.getStockQuantity())
                 .status(product.getStatus().name())
-                .orders(OrderMapper.toDTOList(product.getOrders()))
-                .cartItems(CartItemMapper.toDTOList(product.getCartItems()))
                 .deleted(product.isDeleted())
                 .createdAt(product.getCreatedAt())
                 .build();
@@ -31,11 +27,9 @@ public class ProductMapper {
                 .id(productDTO.getId())
                 .name(productDTO.getName())
                 .description(productDTO.getDescription())
-                .stockQuantity(productDTO.getStockQuantity())
                 .price(productDTO.getPrice())
+                .stockQuantity(productDTO.getStockQuantity())
                 .status(ProductStatus.valueOf(productDTO.getStatus()))
-                .orders(OrderMapper.toEntityList(productDTO.getOrders()))
-                .cartItems(CartItemMapper.toEntityList(productDTO.getCartItems()))
                 .deleted(productDTO.isDeleted())
                 .createdAt(productDTO.getCreatedAt())
                 .build();
@@ -48,23 +42,18 @@ public class ProductMapper {
         if (productDTO.getDescription() != null) {
             product.setDescription(productDTO.getDescription());
         }
-        if (productDTO.getStockQuantity() != 0) {
-            product.setStockQuantity(productDTO.getStockQuantity());
-        }
         if (productDTO.getPrice() != 0) {
             product.setPrice(productDTO.getPrice());
+        }
+        if (productDTO.getStockQuantity() != 0) {
+            product.setStockQuantity(productDTO.getStockQuantity());
         }
         if (productDTO.getStatus() != null) {
             product.setStatus(ProductStatus.valueOf(productDTO.getStatus()));
         }
-        if (productDTO.getOrders() != null) {
-            product.setOrders(OrderMapper.toEntityList(productDTO.getOrders()));
-        }
-        if (productDTO.getCartItems() != null) {
-            product.setCartItems(CartItemMapper.toEntityList(productDTO.getCartItems()));
-        }
+        product.setDeleted(productDTO.isDeleted());
+        product.setCreatedAt(productDTO.getCreatedAt());
     }
-
 
     public static List<ProductDTO> toDTOList(List<Product> products) {
         return products.stream()

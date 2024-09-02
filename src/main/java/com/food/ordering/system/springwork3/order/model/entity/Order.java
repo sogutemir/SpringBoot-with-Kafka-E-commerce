@@ -21,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @SuperBuilder
 @Filter(name = "deletedFilter", condition = "deleted = :isDeleted")
+@Table(name = "orders")
 public class Order extends BaseEntity {
 
     private LocalDateTime orderDate;

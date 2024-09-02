@@ -22,6 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @SuperBuilder
 @Filter(name = "deletedFilter", condition = "deleted = :isDeleted")
+@Table(name = "users")
 public class User extends BaseEntity {
 
     @NotBlank(message = "Username cannot be blank")

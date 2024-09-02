@@ -43,6 +43,7 @@ public class CartItemServiceImpl implements CartItemService {
         }
 
         CartItemMessage message = new CartItemMessage(userId, productId, quantity, "ADD");
+
         kafkaTemplate.send("cart-item-topic", message);
         log.info("Product add to cart message sent to Kafka for user id {} and product id {}", userId, productId);
     }
@@ -66,6 +67,9 @@ public class CartItemServiceImpl implements CartItemService {
     @Transactional
     public void listen(CartItemMessage message) {
         log.info("Received Kafka message to process cart item: {}", message);
+        log.info("**********************************************************************************");
+        log.info("**************************** " +
+                "{} " , message);
 
         User user = userRepository.findById(message.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(message.getUserId()));
@@ -73,6 +77,8 @@ public class CartItemServiceImpl implements CartItemService {
                 .orElseThrow(() -> new ProductNotFoundException(message.getProductId()));
 
         if ("ADD".equals(message.getAction())) {
+            log.info("**********************************************************************************");
+
             CartItem cartItem = new CartItem();
             cartItem.setUser(user);
             cartItem.setProduct(product);

@@ -45,6 +45,8 @@ public class AddressMapper {
         if (addressDTO.getZipCode() != null) {
             address.setZipCode(addressDTO.getZipCode());
         }
+        address.setDeleted(addressDTO.isDeleted());
+        address.setCreatedAt(addressDTO.getCreatedAt());
     }
 
 

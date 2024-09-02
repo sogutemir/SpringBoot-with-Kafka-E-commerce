@@ -35,8 +35,8 @@ This application is designed with scalability and modularity in mind, making it 
 
 ### 1. Clone the repository
 ```sh
-git clone https://github.com/sogutemir/SpringWork3.git
-cd SpringWork3
+git clone https://github.com/sogutemir/SpringBoot-with-Kafka-E-commerce.git
+cd SpringBoot-with-Kafka-E-commerce
 ```
 
 ### 2. Build the project

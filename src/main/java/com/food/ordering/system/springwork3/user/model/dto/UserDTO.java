@@ -5,6 +5,7 @@ import com.food.ordering.system.springwork3.cartItem.model.dto.CartItemDTO;
 import com.food.ordering.system.springwork3.order.model.dto.OrderDTO;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class UserDTO {
     private List<OrderDTO> orders;
     private List<CartItemDTO> cartItems;
     private String password;
+    private BigDecimal money;
     private boolean deleted;
     private LocalDateTime createdAt;
 }

@@ -20,6 +20,7 @@ public class UserMapper {
                 .status(user.getStatus().name())
                 .address(AddressMapper.toDTO(user.getAddress()))
                 .password(user.getPassword())
+                .money(user.getMoney())
                 .orders(user.getOrders() != null ? OrderMapper.toDTOList(user.getOrders()) : null)
                 .cartItems(user.getCartItems() != null ? CartItemMapper.toDTOList(user.getCartItems()) : null)
                 .deleted(user.isDeleted())
@@ -35,6 +36,7 @@ public class UserMapper {
                 .status(UserStatus.valueOf(userDTO.getStatus()))
                 .address(AddressMapper.toEntity(userDTO.getAddress()))
                 .password(userDTO.getPassword())
+                .money(userDTO.getMoney())
                 .orders(userDTO.getOrders() != null ? OrderMapper.toEntityList(userDTO.getOrders()) : null)
                 .cartItems(userDTO.getCartItems() != null ? CartItemMapper.toEntityList(userDTO.getCartItems()) : null)
                 .deleted(userDTO.isDeleted())
@@ -60,6 +62,9 @@ public class UserMapper {
         }
         if (userDTO.getCartItems() != null) {
             user.setCartItems(CartItemMapper.toEntityList(userDTO.getCartItems()));
+        }
+        if(userDTO.getMoney() != null) {
+            user.setMoney(userDTO.getMoney());
         }
         if (userDTO.getPassword() != null) {
             user.setPassword(userDTO.getPassword());

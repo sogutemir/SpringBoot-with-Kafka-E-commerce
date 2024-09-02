@@ -16,7 +16,7 @@ public class OrderDTO {
     private LocalDateTime orderDate;
     private String status;
     private Long userId;
-    private List<Long> productIds;
+    private List<OrderProductDTO> orderProducts;
     private PaymentDTO payment;
     private boolean deleted;
     private LocalDateTime createdAt;

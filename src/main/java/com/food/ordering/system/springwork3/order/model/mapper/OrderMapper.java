@@ -1,10 +1,9 @@
 package com.food.ordering.system.springwork3.order.model.mapper;
 
 import com.food.ordering.system.springwork3.order.model.OrderStatus;
-import com.food.ordering.system.springwork3.order.model.entity.Order;
 import com.food.ordering.system.springwork3.order.model.dto.OrderDTO;
+import com.food.ordering.system.springwork3.order.model.entity.Order;
 import com.food.ordering.system.springwork3.payment.model.mapper.PaymentMapper;
-import com.food.ordering.system.springwork3.product.model.entity.Product;
 import com.food.ordering.system.springwork3.user.model.entity.User;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class OrderMapper {
                 .orderDate(order.getOrderDate())
                 .status(order.getStatus().name())
                 .userId(order.getUser().getId())
-                .productIds(order.getProducts() != null ? order.getProducts().stream().map(Product::getId).collect(Collectors.toList()) : null)
+                .orderProducts(OrderProductMapper.toDTOList(order.getOrderProducts()))
                 .payment(order.getPayment() != null ? PaymentMapper.toDTO(order.getPayment()) : null)
                 .deleted(order.isDeleted())
                 .createdAt(order.getCreatedAt())
@@ -26,16 +25,20 @@ public class OrderMapper {
     }
 
     public static Order toEntity(OrderDTO orderDTO) {
-        return Order.builder()
+        Order order = Order.builder()
                 .id(orderDTO.getId())
                 .orderDate(orderDTO.getOrderDate())
                 .status(OrderStatus.valueOf(orderDTO.getStatus()))
                 .user(orderDTO.getUserId() != null ? User.builder().id(orderDTO.getUserId()).build() : null)
-                .products(orderDTO.getProductIds() != null ? orderDTO.getProductIds().stream().map(id -> Product.builder().id(id).build()).collect(Collectors.toList()) : null)
+                .orderProducts(OrderProductMapper.toEntityList(orderDTO.getOrderProducts())) // Updated
                 .payment(orderDTO.getPayment() != null ? PaymentMapper.toEntity(orderDTO.getPayment()) : null)
                 .deleted(orderDTO.isDeleted())
                 .createdAt(orderDTO.getCreatedAt())
                 .build();
+
+        order.getOrderProducts().forEach(op -> op.setOrder(order));
+
+        return order;
     }
 
     public static void partialUpdate(OrderDTO orderDTO, Order order) {
@@ -48,8 +51,9 @@ public class OrderMapper {
         if (orderDTO.getUserId() != null) {
             order.setUser(User.builder().id(orderDTO.getUserId()).build());
         }
-        if (orderDTO.getProductIds() != null) {
-            order.setProducts(orderDTO.getProductIds().stream().map(id -> Product.builder().id(id).build()).collect(Collectors.toList()));
+        if (orderDTO.getOrderProducts() != null) {
+            order.setOrderProducts(OrderProductMapper.toEntityList(orderDTO.getOrderProducts()));
+            order.getOrderProducts().forEach(op -> op.setOrder(order));
         }
         if (orderDTO.getPayment() != null) {
             order.setPayment(PaymentMapper.toEntity(orderDTO.getPayment()));

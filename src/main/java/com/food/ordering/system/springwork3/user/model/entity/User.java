@@ -8,11 +8,13 @@ import com.food.ordering.system.springwork3.user.model.UserStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Filter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -36,6 +38,9 @@ public class User extends BaseEntity {
     @NotBlank(message = "Password cannot be blank")
     @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
+
+    @PositiveOrZero(message = "Money cannot be negative")
+    private BigDecimal money = BigDecimal.ZERO;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status = UserStatus.ACTIVE;

@@ -3,12 +3,13 @@ package com.food.ordering.system.springwork3.payment.model.entity;
 import com.food.ordering.system.springwork3.base.model.BaseEntity;
 import com.food.ordering.system.springwork3.order.model.entity.Order;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Filter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,8 +26,8 @@ public class Payment extends BaseEntity {
 
     private LocalDateTime paymentDate;
 
-    @Min(value = 0, message = "Amount cannot be negative")
-    private double amount;
+    @PositiveOrZero(message = "Amount cannot be negative")
+    private BigDecimal amount = BigDecimal.ZERO;
 
     @OneToOne(mappedBy = "payment", fetch = FetchType.EAGER)
     private Order order;

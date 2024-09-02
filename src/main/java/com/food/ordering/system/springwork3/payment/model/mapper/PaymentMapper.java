@@ -1,5 +1,6 @@
 package com.food.ordering.system.springwork3.payment.model.mapper;
 
+import com.food.ordering.system.springwork3.common.mapper.BigDecimalMapper;
 import com.food.ordering.system.springwork3.order.model.entity.Order;
 import com.food.ordering.system.springwork3.payment.model.entity.Payment;
 import com.food.ordering.system.springwork3.payment.model.dto.PaymentDTO;
@@ -14,7 +15,7 @@ public class PaymentMapper {
                 .id(payment.getId())
                 .paymentMethod(payment.getPaymentMethod())
                 .paymentDate(payment.getPaymentDate())
-                .amount(payment.getAmount())
+                .amount(BigDecimalMapper.toDouble(payment.getAmount()))
                 .orderId(payment.getOrder().getId())
                 .deleted(payment.isDeleted())
                 .createdAt(payment.getCreatedAt())
@@ -26,7 +27,7 @@ public class PaymentMapper {
                 .id(paymentDTO.getId())
                 .paymentMethod(paymentDTO.getPaymentMethod())
                 .paymentDate(paymentDTO.getPaymentDate())
-                .amount(paymentDTO.getAmount())
+                .amount(BigDecimalMapper.fromDouble(paymentDTO.getAmount()))
                 .order(Order.builder().id(paymentDTO.getOrderId()).build())
                 .deleted(paymentDTO.isDeleted())
                 .createdAt(paymentDTO.getCreatedAt())
@@ -41,13 +42,12 @@ public class PaymentMapper {
             payment.setPaymentDate(paymentDTO.getPaymentDate());
         }
         if (paymentDTO.getAmount() != 0) {
-            payment.setAmount(paymentDTO.getAmount());
+            payment.setAmount(BigDecimalMapper.fromDouble(paymentDTO.getAmount()));
         }
         if (paymentDTO.getOrderId() != null) {
             payment.setOrder(Order.builder().id(paymentDTO.getOrderId()).build());
         }
     }
-
 
     public static List<PaymentDTO> toDTOList(List<Payment> payments) {
         return payments.stream()

@@ -4,6 +4,7 @@ import com.food.ordering.system.springwork3.base.model.BaseEntity;
 import com.food.ordering.system.springwork3.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Filter;
 
 @Entity
@@ -11,7 +12,7 @@ import org.hibernate.annotations.Filter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Filter(name = "deletedFilter", condition = "deleted = :isDeleted")
 public class Address extends BaseEntity {
 

@@ -2,13 +2,15 @@ package com.food.ordering.system.springwork3.product.model.dto;
 
 import com.food.ordering.system.springwork3.cartItem.model.dto.CartItemDTO;
 import com.food.ordering.system.springwork3.order.model.dto.OrderDTO;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ProductDTO {
     private Long id;

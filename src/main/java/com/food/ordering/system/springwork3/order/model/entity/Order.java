@@ -8,6 +8,7 @@ import com.food.ordering.system.springwork3.user.model.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Filter;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Filter(name = "deletedFilter", condition = "deleted = :isDeleted")
 public class Order extends BaseEntity {
 

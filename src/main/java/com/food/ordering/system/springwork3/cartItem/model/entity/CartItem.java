@@ -6,6 +6,7 @@ import com.food.ordering.system.springwork3.user.model.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Filter;
 
 @Entity
@@ -13,7 +14,7 @@ import org.hibernate.annotations.Filter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"user_id", "product_id"})
 })

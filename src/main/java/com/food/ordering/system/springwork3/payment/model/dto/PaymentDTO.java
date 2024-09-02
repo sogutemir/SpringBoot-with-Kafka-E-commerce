@@ -1,11 +1,13 @@
 package com.food.ordering.system.springwork3.payment.model.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class PaymentDTO {
     private Long id;

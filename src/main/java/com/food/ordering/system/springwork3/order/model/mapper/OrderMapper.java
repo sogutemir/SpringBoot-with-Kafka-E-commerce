@@ -40,6 +40,27 @@ public class OrderMapper {
                 .build();
     }
 
+    public static void partialUpdate(OrderDTO orderDTO, Order order) {
+        if (orderDTO.getOrderDate() != null) {
+            order.setOrderDate(orderDTO.getOrderDate());
+        }
+        if (orderDTO.getStatus() != null) {
+            order.setStatus(OrderStatus.valueOf(orderDTO.getStatus()));
+        }
+        if (orderDTO.getUserId() != null) {
+            order.setUser(User.builder().id(orderDTO.getUserId()).build());
+        }
+        if (orderDTO.getProductIds() != null) {
+            order.setProducts(orderDTO.getProductIds().stream()
+                    .map(id -> Product.builder().id(id).build())
+                    .collect(Collectors.toList()));
+        }
+        if (orderDTO.getPayment() != null) {
+            order.setPayment(PaymentMapper.toEntity(orderDTO.getPayment()));
+        }
+    }
+
+
     public static List<OrderDTO> toDTOList(List<Order> orders) {
         return orders.stream()
                 .map(OrderMapper::toDTO)

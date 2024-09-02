@@ -40,6 +40,31 @@ public class UserMapper {
                 .build();
     }
 
+    public static void partialUpdate(UserDTO userDTO, User user) {
+        if (userDTO.getUsername() != null) {
+            user.setUsername(userDTO.getUsername());
+        }
+        if (userDTO.getEmail() != null) {
+            user.setEmail(userDTO.getEmail());
+        }
+        if (userDTO.getPassword() != null) {
+            user.setPassword(userDTO.getPassword());
+        }
+        if (userDTO.getStatus() != null) {
+            user.setStatus(UserStatus.valueOf(userDTO.getStatus()));
+        }
+        if (userDTO.getAddress() != null) {
+            user.setAddress(AddressMapper.toEntity(userDTO.getAddress()));
+        }
+        if (userDTO.getOrders() != null) {
+            user.setOrders(OrderMapper.toEntityList(userDTO.getOrders()));
+        }
+        if (userDTO.getCartItems() != null) {
+            user.setCartItems(CartItemMapper.toEntityList(userDTO.getCartItems()));
+        }
+    }
+
+
     public static List<UserDTO> toDTOList(List<User> users) {
         return users.stream()
                 .map(UserMapper::toDTO)

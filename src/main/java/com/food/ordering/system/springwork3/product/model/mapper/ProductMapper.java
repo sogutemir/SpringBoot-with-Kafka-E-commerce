@@ -41,6 +41,31 @@ public class ProductMapper {
                 .build();
     }
 
+    public static void partialUpdate(ProductDTO productDTO, Product product) {
+        if (productDTO.getName() != null) {
+            product.setName(productDTO.getName());
+        }
+        if (productDTO.getDescription() != null) {
+            product.setDescription(productDTO.getDescription());
+        }
+        if (productDTO.getStockQuantity() != 0) {
+            product.setStockQuantity(productDTO.getStockQuantity());
+        }
+        if (productDTO.getPrice() != 0) {
+            product.setPrice(productDTO.getPrice());
+        }
+        if (productDTO.getStatus() != null) {
+            product.setStatus(ProductStatus.valueOf(productDTO.getStatus()));
+        }
+        if (productDTO.getOrders() != null) {
+            product.setOrders(OrderMapper.toEntityList(productDTO.getOrders()));
+        }
+        if (productDTO.getCartItems() != null) {
+            product.setCartItems(CartItemMapper.toEntityList(productDTO.getCartItems()));
+        }
+    }
+
+
     public static List<ProductDTO> toDTOList(List<Product> products) {
         return products.stream()
                 .map(ProductMapper::toDTO)

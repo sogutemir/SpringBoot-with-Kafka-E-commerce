@@ -21,6 +21,7 @@ public class UserDTO {
     private AddressDTO address;
     private List<OrderDTO> orders;
     private List<CartItemDTO> cartItems;
+    private String password;
     private boolean deleted;
     private LocalDateTime createdAt;
 }

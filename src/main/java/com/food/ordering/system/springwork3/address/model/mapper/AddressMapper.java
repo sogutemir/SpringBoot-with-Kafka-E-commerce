@@ -32,6 +32,22 @@ public class AddressMapper {
                 .build();
     }
 
+    public static void partialUpdate(AddressDTO addressDTO, Address address) {
+        if (addressDTO.getStreet() != null) {
+            address.setStreet(addressDTO.getStreet());
+        }
+        if (addressDTO.getCity() != null) {
+            address.setCity(addressDTO.getCity());
+        }
+        if (addressDTO.getState() != null) {
+            address.setState(addressDTO.getState());
+        }
+        if (addressDTO.getZipCode() != null) {
+            address.setZipCode(addressDTO.getZipCode());
+        }
+    }
+
+
     public static List<AddressDTO> toDTOList(List<Address> addresses) {
         return addresses.stream()
                 .map(AddressMapper::toDTO)

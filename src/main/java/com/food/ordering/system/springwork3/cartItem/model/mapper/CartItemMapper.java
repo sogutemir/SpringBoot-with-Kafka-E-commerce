@@ -32,6 +32,19 @@ public class CartItemMapper {
                 .build();
     }
 
+    public static void partialUpdate(CartItemDTO cartItemDTO, CartItem cartItem) {
+        if (cartItemDTO.getQuantity() != 0) {
+            cartItem.setQuantity(cartItemDTO.getQuantity());
+        }
+        if (cartItemDTO.getUserId() != null) {
+            cartItem.setUser(User.builder().id(cartItemDTO.getUserId()).build());
+        }
+        if (cartItemDTO.getProductId() != null) {
+            cartItem.setProduct(Product.builder().id(cartItemDTO.getProductId()).build());
+        }
+    }
+
+
     public static List<CartItemDTO> toDTOList(List<CartItem> cartItems) {
         return cartItems.stream()
                 .map(CartItemMapper::toDTO)

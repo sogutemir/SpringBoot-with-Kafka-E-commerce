@@ -33,6 +33,22 @@ public class PaymentMapper {
                 .build();
     }
 
+    public static void partialUpdate(PaymentDTO paymentDTO, Payment payment) {
+        if (paymentDTO.getPaymentMethod() != null) {
+            payment.setPaymentMethod(paymentDTO.getPaymentMethod());
+        }
+        if (paymentDTO.getPaymentDate() != null) {
+            payment.setPaymentDate(paymentDTO.getPaymentDate());
+        }
+        if (paymentDTO.getAmount() != 0) {
+            payment.setAmount(paymentDTO.getAmount());
+        }
+        if (paymentDTO.getOrderId() != null) {
+            payment.setOrder(Order.builder().id(paymentDTO.getOrderId()).build());
+        }
+    }
+
+
     public static List<PaymentDTO> toDTOList(List<Payment> payments) {
         return payments.stream()
                 .map(PaymentMapper::toDTO)

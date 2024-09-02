@@ -53,6 +53,9 @@ public class PaymentServiceImpl implements PaymentService {
 
         user.setMoney(user.getMoney().subtract(amount));
         order.setStatus(OrderStatus.APPROVED);
+        if(order.getOrderDate() == null) {
+            order.setOrderDate(java.time.LocalDateTime.now());
+        }
         orderRepository.save(order);
         userRepository.save(user);
 

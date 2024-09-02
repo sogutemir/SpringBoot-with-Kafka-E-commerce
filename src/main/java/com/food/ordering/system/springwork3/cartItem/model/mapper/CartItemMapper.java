@@ -2,6 +2,7 @@ package com.food.ordering.system.springwork3.cartItem.model.mapper;
 
 import com.food.ordering.system.springwork3.cartItem.model.entity.CartItem;
 import com.food.ordering.system.springwork3.cartItem.model.dto.CartItemDTO;
+import com.food.ordering.system.springwork3.order.model.dto.OrderProductDTO;
 import com.food.ordering.system.springwork3.product.model.entity.Product;
 import com.food.ordering.system.springwork3.user.model.entity.User;
 
@@ -56,5 +57,12 @@ public class CartItemMapper {
         return cartItemDTOs.stream()
                 .map(CartItemMapper::toEntity)
                 .collect(Collectors.toList());
+    }
+
+    public static OrderProductDTO toOrderProductDTO(CartItem cartItem) {
+        return OrderProductDTO.builder()
+                .productId(cartItem.getProduct().getId())
+                .quantity(cartItem.getQuantity())
+                .build();
     }
 }

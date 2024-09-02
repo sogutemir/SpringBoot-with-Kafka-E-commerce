@@ -1,7 +1,7 @@
-# SpringWork3
+# SpringBoot with Kafka E-commerce
 
 ## Project Description
-**SpringWork3** is a comprehensive food ordering system developed using Java and Spring Boot.
+**SpringBoot with Kafka E-commerce** is a comprehensive food ordering system developed using Java and Spring Boot.
 It offers a seamless experience for users to manage their cart items, place orders, and process payments.
 The system leverages Kafka for robust messaging and a SQL database for reliable data persistence.
 This application is designed with scalability and modularity in mind, making it suitable for both learning and production environments.
